@@ -1,0 +1,24 @@
+{
+  "name": "eagle-eye",
+  "version": "0.0.1",
+  "homepage": "https://github.com/develodesign/eagle-eye",
+  "authors": [
+    "Paul Bill <paul@develodesign.co.uk>"
+  ],
+  "description": "Simple jQuery plugin that'll test to see if an element is visible on the users window",
+  "main": "scripts/eagle-eye.js",
+  "keywords": [
+    "jQuery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower-components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
