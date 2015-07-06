@@ -51,12 +51,32 @@
 
 	/**
 	 * On scroll test if the element is visible
+	 * Pass the element and the cached dimensions back to the callback.
 	 */
 	EagleEyeObject.prototype.onScroll = function( windowDimensions, windowScrollTop ){
 
-		this.isVisible( windowDimensions, windowScrollTop ) ?
-			this.options.onVisible( this.$el ):
-			this.options.onInvisible( this.$el );
+		var dimensions = {
+			el: {
+				dimensions:  {},
+				offsetTop: this.elOffsetTop
+			},
+			window: {
+				dimensions: windowDimensions,
+				scrollTop: windowScrollTop
+			}
+		};
+
+		if( this.isVisible( windowDimensions, windowScrollTop ) ){
+
+			dimensions.el.dimensions.height = this.elOffsetTop;
+			this.options.onVisible( this.$el, dimensions )
+		}
+		else {
+
+			dimensions.el.dimensions.height = this.elOffsetTop;
+			this.options.onInvisible( this.$el, dimensions );
+		}
+
 	};
 
 	/**
@@ -69,7 +89,7 @@
 	 */
 	EagleEyeObject.prototype.isVisible = function( windowDimensions, windowScrollTop ){
 
-		var offsetTop = this.$el.offset().top;
+		var offsetTop = this.elOffsetTop = this.$el.offset().top;
 		var height = this.elHeight;
 
 		var overBottom = function(){
