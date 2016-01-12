@@ -17,6 +17,8 @@ jQuery( function( $ ){
 
 	$all.eagleEye({
 
+		triggerOnPartial: false,
+
 		onInvisible: function( $el ){
 
 			var pos = $.inArray( $el.prop( 'id' ), visibleElements );

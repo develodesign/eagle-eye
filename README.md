@@ -29,6 +29,8 @@ when the elements come into view.
     jQuery( function( $ ){
     
         $( '.element' ).eagleEye({
+
+            triggerOnPartial: false, // Default value, set to true to trigger visible when an element is only partially in view.
         
             onInvisible: function( $el ){
                 // Do Something
@@ -45,6 +47,6 @@ Have a look at the example in the example directory for more information.
 
 ## Todo
 
-- Check to see when an element is partially in view.
+- Horizontal fold
 
 

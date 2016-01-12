@@ -31,10 +31,10 @@
 			triggerOnPartial: false,
 
 			// Callback for when the element is visible.
-			onVisible: function( $el ){ return true },
+			onVisible: function( $el, dimensions ){ return true },
 
 			// Callback for when the element is not visible
-			onInvisible: function( $el ){ return true }
+			onInvisible: function( $el, dimensions ){ return true }
 
 		}, options );
 
@@ -47,6 +47,7 @@
 	EagleEyeObject.prototype.cacheDimensions = function(){
 
 		this.elHeight = parseInt( this.$el.height() );
+
 	};
 
 	/**
@@ -66,15 +67,15 @@
 			}
 		};
 
-		if( this.isVisible( windowDimensions, windowScrollTop ) ){
+		if( this.isVisible() ){
 
 			dimensions.el.dimensions.height = this.elOffsetTop;
-			this.options.onVisible( this.$el, dimensions )
+			this.options.onVisible( this.$el )
 		}
 		else {
 
 			dimensions.el.dimensions.height = this.elOffsetTop;
-			this.options.onInvisible( this.$el, dimensions );
+			this.options.onInvisible( this.$el );
 		}
 
 	};
@@ -82,27 +83,16 @@
 	/**
 	 * Test the element is visible in the window.
 	 *
-	 * @param windowDimensions {object}
-	 * @param windowScrollTop {number}
-	 *
 	 * @return boolean
 	 */
-	EagleEyeObject.prototype.isVisible = function( windowDimensions, windowScrollTop ){
+	EagleEyeObject.prototype.isVisible = function(){
 
-		var offsetTop = this.elOffsetTop = this.$el.offset().top;
-		var height = this.elHeight;
+		var elTop = this.elOffsetTop = this.$el[0].getBoundingClientRect().top;
+		var elBottom = this.$el[0].getBoundingClientRect().bottom;
 
-		var overBottom = function(){
-
-			return offsetTop + height < windowScrollTop + windowDimensions.height;
-		};
-
-		var underTop = function(){
-
-			return offsetTop > windowScrollTop;
-		};
-
-		return underTop() && overBottom();
+		return this.options.triggerOnPartial ?
+			elTop < window.innerHeight && elBottom >= 0:
+			elTop >= 0 && elBottom <= window.innerHeight;
 	};
 
 	/**
